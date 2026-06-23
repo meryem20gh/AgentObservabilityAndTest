@@ -1,0 +1,17 @@
+[
+  {
+    "id":"KB001",
+    "question":"what is the sla of employee onboarding",
+    "answer":"The SLA is 48 hours."
+  },
+  {
+    "id":"KB002",
+    "question":"who validates leave requests",
+    "answer":"The manager validates leave requests."
+  },
+  {
+    "id":"KB003",
+    "question":"what is nexus rh",
+    "answer":"Nexus RH is an HR automation platform."
+  }
+]

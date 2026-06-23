@@ -1,0 +1,12 @@
+# Core & Agents
+langchain-core
+langchain-openai
+langsmith
+
+# Testing
+pytest
+pytest-asyncio
+
+# Observability & Utils
+pydantic
+python-dotenv
