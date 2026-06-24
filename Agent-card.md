@@ -4,7 +4,7 @@
 * **Nom du Système :** Security Guardrail & Knowledge Pipeline
 * **Version actuelle :** v1.0.0
 * **Type d'Architecture :** Graphe d'état orienté sécurité (LangGraph)
-* **Contributeurs :** Meryem GHANEM, Fatima Ezzahra Elmenoun, Kola Ismail
+* **Contributeur :** Meryem GHANEM
 * **Date de Création :** Juin 2026
 
 ## 2. Description de l'Architecture & Rôles
