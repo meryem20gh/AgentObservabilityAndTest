@@ -222,3 +222,34 @@ def fallback_agent(state):
     )
 
     return state
+# À ajouter à la fin de agents.py
+
+def intent_classification_agent(state):
+    """Analyse l'intention de l'utilisateur pour orienter ou améliorer la recherche."""
+    start = time.time()
+    user_input = state["user_input"]
+    
+    prompt = f"""
+Analyze the following user question and classify it into one of these categories: TECHNICAL, ADMINISTRATIVE, or GENERAL.
+Return ONLY the category name.
+
+User Question: {user_input}
+Category:"""
+
+    response = llm.invoke(prompt)
+    intent = response.content.strip().upper()
+
+    # Sécurité si le LLM renvoie autre chose
+    if intent not in ["TECHNICAL", "ADMINISTRATIVE", "GENERAL"]:
+        intent = "GENERAL"
+
+    # Mise à jour de l'état
+    state["user_intent"] = intent
+    
+    # Log de performance
+    add_log(state, "intent_classification_agent", {
+        "user_intent": intent,
+        "duration": round(time.time() - start, 3)
+    })
+    
+    return state

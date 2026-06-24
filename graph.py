@@ -5,15 +5,16 @@ from langgraph.graph import StateGraph, END
 from state import AgentState
 from agents import (
     guardrail_agent,
+    intent_classification_agent,  # <-- Importé depuis agents.py
     knowledge_agent,
     fallback_agent
 )
 
 # Router after Guardrail check
-def guardrail_router(state) -> Literal["knowledge_agent", "__end__"]:
+def guardrail_router(state) -> Literal["intent_classification_agent", "__end__"]:
     if state.get("is_injection", False):
         return "__end__"  # Skip execution entirely if malicious
-    return "knowledge_agent"
+    return "intent_classification_agent"  # Oriente vers la classification si SAFE
 
 # Router after Knowledge evaluation
 def knowledge_router(state) -> Literal["fallback_agent", "__end__"]:
@@ -27,6 +28,7 @@ graph = StateGraph(AgentState)
 # NODES
 # ==========================
 graph.add_node("guardrail_agent", guardrail_agent)
+graph.add_node("intent_classification_agent", intent_classification_agent)  # <-- Ajout du nœud
 graph.add_node("knowledge_agent", knowledge_agent)
 graph.add_node("fallback_agent", fallback_agent)
 
@@ -42,10 +44,13 @@ graph.add_conditional_edges(
     "guardrail_agent",
     guardrail_router,
     {
-        "knowledge_agent": "knowledge_agent",
+        "intent_classification_agent": "intent_classification_agent",
         "__end__": END
     }
 )
+
+# Arête directe : Une fois l'intention classifiée, on passe automatiquement à la recherche
+graph.add_edge("intent_classification_agent", "knowledge_agent")
 
 graph.add_conditional_edges(
     "knowledge_agent",
